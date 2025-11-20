@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    container_name: suumo_app
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - db
+    command: python src/scraper.py
+
+  db:
+    image: postgres:15
+    container_name: suumo_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
