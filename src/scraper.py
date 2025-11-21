@@ -33,6 +33,21 @@ def fetch_suumo_count():
     count_text = count_elem.get_text(strip=True)
     print("Suumo 新築戸建て（神奈川県小田原市）の件数:", count_text)
 
+    # 物件ブロック（30件）
+    items = soup.select(".dottable--cassette")
+    print(len(items))
+
+    test_item = items[0]
+
+    values = test_item.select("dd.dottable-vm")
+    print(len(values))
+
+    name = values[0].get_text(strip=True)
+    print(name)
+
+    price = values[1].get_text(strip=True)
+    print(price)
+
 
 if __name__ == "__main__":
     fetch_suumo_count()
